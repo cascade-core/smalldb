@@ -55,7 +55,7 @@ abstract class FlupdoMachine extends AbstractMachine
 	{
 		// Check owner
 		if (@ $permissions['owner'] && $this->user_id_table_column && ($a = $this->user_id_auth_method)) {
-			$properties = $this->getProperties();
+			$properties = $this->getProperties($id);
 			if ($properties[$this->user_id_table_column] == $this->backend->getAuth()->$a()) {
 				return true;
 			} else {
@@ -106,7 +106,42 @@ abstract class FlupdoMachine extends AbstractMachine
 		$this->queryAddStateSelect($listing);
 		$this->queryAddPropertiesSelect($listing);
 		$this->addPermissionsCondition($listing);
-		$listing->debugDump();
+
+		$order_by = null;
+		$order_asc = true;
+		foreach($filters as $filter => $value) {
+			switch ($filter) {
+				case 'order_by':
+				case 'order-by':
+					$order_by = $value;
+					break;
+
+				case 'order_asc':
+				case 'order-asc':
+					$order_asc = (bool) $value;
+					break;
+
+				case 'order_desc':
+				case 'order-desc':
+					$order_asc = ! $value;
+					break;
+
+				case 'type':
+					// ignored
+					break;
+
+				default:
+					$listing->where($listing->quoteIdent($filter).' = ?', $value);
+			}
+		}
+
+		if ($order_by !== null) {
+			$listing->orderBy($listing->quoteIdent($order_by).' '.($order_asc ? 'ASC':'DESC'));
+		}
+
+		//$listing->debugDump();
+		//debug_dump($filters, '$filters');
+		//debug_dump($listing, '$listing');
 		return $listing;
 	}
 

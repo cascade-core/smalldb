@@ -73,7 +73,7 @@ abstract class FlupdoMachine extends AbstractMachine
 	protected function addPermissionsCondition($query)
 	{
 		if ($this->user_id_table_column && ($a = $this->user_id_auth_method)) {
-			$query->where('`'.$this->flupdo->quoteIdent($this->user_id_table_column).'` = ?', $this->backend->getAuth()->$a());
+			$query->where($this->flupdo->quoteIdent($this->user_id_table_column).' = ?', $this->backend->getAuth()->$a());
 		}
 	}
 

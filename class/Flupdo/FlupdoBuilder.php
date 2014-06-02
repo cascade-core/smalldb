@@ -102,7 +102,7 @@ class FlupdoBuilder
 		if (is_array($ident)) {
 			return array_map(function($ident) { return str_replace("`", "``", $ident); }, $ident);
 		} else {
-			return str_replace("`", "``", $ident);
+			return '`'.str_replace(array('`', '.'), array('``', '`.`'), $ident).'`';
 		}
 	}
 

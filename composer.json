@@ -13,10 +13,11 @@
         "plugin": "smalldb"
     },
     "autoload": {
-        "psr-4": { "Smalldb\\": "class/" }
+        "psr-4": { "Smalldb\\Cascade\\": "class/" }
     },
     "require": {
         "php": ">=5.4",
+        "cascade/libsmalldb": "dev-master",
         "cascade/composer-plugin": ">=1.1",
 		"cascade/core": ">=0.12"
     },

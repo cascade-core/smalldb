@@ -127,10 +127,25 @@ class Auth implements \Smalldb\StateMachine\IAuth, \Cascade\Core\IAuth
 	}
 
 
-	/// @copydoc Smalldb\StateMachine\IAuth::getUserRole()
+	/**
+	 * Returns user's role.
+	 *
+	 * TODO: Allow user to have mor than one role.
+	 */
 	public function getUserRole()
 	{
 		return $this->session_machine->id !== null ? $this->session_machine[$this->user_role_property] : null;
+	}
+
+
+	/// @copydoc Smalldb\StateMachine\IAuth::getUserRole()
+	public function hasUserRoles($roles)
+	{
+		if (is_array($roles)) {
+			return in_array($this->getUserRole(), $roles);
+		} else {
+			return $this->getUserRole() == $roles;
+		}
 	}
 
 

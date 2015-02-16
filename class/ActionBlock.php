@@ -106,6 +106,10 @@ class ActionBlock extends \Cascade\Core\Block
 		if (isset($args['ref'])) {
 			$ref = $args['ref'];
 			unset($args['ref']);
+		} else if (array_key_exists('ref', $args)) {
+			// got ref, but it is null
+			$ref = $this->machine->getBackend()->nullRef($this->machine->getMachineType());
+			unset($args['ref']);
 		} else {
 			// FIXME: Should machine be able to create null ref?
 			$ref = $this->machine->getBackend()->nullRef($this->machine->getMachineType());

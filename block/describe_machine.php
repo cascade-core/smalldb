@@ -29,6 +29,7 @@ class B_smalldb__describe_machine extends \Cascade\Core\Block
 	protected $outputs = array(
 		'type' => true,
 		'desc' => true,
+		'raw_def' => true,
 		'done' => true,
 	);
 
@@ -53,6 +54,7 @@ class B_smalldb__describe_machine extends \Cascade\Core\Block
 
 				$this->out('type', $type);
 				$this->out('desc', $desc);
+				$this->out('raw_def', $smalldb->describeType($type));
 				$this->out('done', true);
 				return true;
 			}

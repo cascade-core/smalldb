@@ -78,7 +78,7 @@ class HeadingBlock extends BackendBlock
 		// TODO: This should be configurable
 		$links = array();
 
-		if ($ref->id) {
+		if ($ref->id && empty($action_def['heading_without_links'])) {
 			if ($action != 'show') {
 				// Cancel action
 				$links[] = array(

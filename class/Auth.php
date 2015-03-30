@@ -148,6 +148,12 @@ class Auth implements \Smalldb\StateMachine\IAuth, \Cascade\Core\IAuth
 		}
 	}
 
+	/// @copydoc Smalldb\StateMachine\IAuth::isAllMighty()
+	public function isAllMighty()
+	{
+		return (empty($_SERVER['REMOTE_ADDR']) && php_sapi_name() == 'cli') || $this->hasUserRoles('admin');
+	}
+
 
 	/**
 	 * First level of authorization.

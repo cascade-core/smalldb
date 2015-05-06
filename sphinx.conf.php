@@ -218,6 +218,11 @@ foreach ($smalldb->getKnownTypes() as $type_name) {
 			$t = 'string';
 		}
 
+		if ($property == 'id') {
+			// 'id' column is reserved name
+			continue;
+		}
+
 		switch ($t) {
 			case 'fulltext':
 				// indexed

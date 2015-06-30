@@ -117,7 +117,7 @@ source {$base_name}
 
 	# index nothing, just suppress warning since this index is abstract
 	# 1st column is ID, 2nd column is state of the machine
-	sql_query = SELECT 1 AS sphinx_key, '' AS state LIMIT 1
+	sql_query = SELECT 1 AS sphinx_key, '' AS state, '' AS dummy_fulltext_column LIMIT 0
 	sql_attr_string = state
 }
 

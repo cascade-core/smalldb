@@ -31,6 +31,7 @@ class LoadRefBlock extends BackendBlock
 	protected $inputs = array(
 		'ref' => null,
 		'preload' => true,	/// Preload properties?
+		'new_ref' => false,	/// Create new ref and reload item?
 	);
 
 	/**
@@ -60,6 +61,11 @@ class LoadRefBlock extends BackendBlock
 
 			if ($this->ref === null) {
 				return;
+			}
+
+			if ($this->in('new_ref')) {
+				$this->ref = clone $this->ref;
+				unset($this->ref->properties);
 			}
 
 			$this->out('ref', $this->ref);

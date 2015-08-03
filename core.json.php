@@ -21,9 +21,9 @@
             "text": "string",
             "checkbox": "bool",
             "color": "string",
-            "date": "timestamp",
-            "datetime": "timestamp",
-            "datetime-local": "timestamp",
+            "date": "string",
+            "datetime": "string",
+            "datetime-local": "string",
             "email": "string",
             "file": "string",
             "hidden": "string",
@@ -35,7 +35,7 @@
             "search": "string",
             "tel": "string",
             "text": "string",
-            "time": "timestamp",
+            "time": "string",
             "url": "string",
             "week": "timestamp"
         }

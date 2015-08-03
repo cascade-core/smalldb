@@ -113,7 +113,6 @@ source {$base_name}
         sql_sock = /var/run/mysqld/mysqld.sock
 
         sql_query_pre = SET NAMES utf8
-	sql_query_pre = SET SESSION query_cache_type=OFF
 
 	# index nothing, just suppress warning since this index is abstract
 	# 1st column is ID, 2nd column is state of the machine

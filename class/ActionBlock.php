@@ -66,6 +66,11 @@ class ActionBlock extends \Cascade\Core\Block
 	protected $output_values;
 
 	/**
+	 * Accepted exceptions which should be sent to outputs as expected error.
+	 */
+	protected $accepted_exceptions;
+
+	/**
 	 * Setup block to act as expected. Configuration is done by BlockStorage.
 	 */
 	public function __construct($machine, $action, $action_desc)
@@ -92,6 +97,15 @@ class ActionBlock extends \Cascade\Core\Block
 		$this->output_values = $block_desc['outputs'];
 		$this->outputs = array_combine(array_keys($this->output_values), array_pad(array(), count($this->output_values), true));
 		$this->outputs['done'] = true;
+
+		// accepted exceptions which will be set to outputs
+		if (isset($block_desc['accepted_exceptions'])) {
+			$this->accepted_exceptions = $block_desc['accepted_exceptions'];
+			$this->outputs['error_msg'] = true;
+			$this->outputs['exception'] = true;
+		} else {
+			$this->accepted_exceptions = array();
+		}
 	}
 
 
@@ -156,8 +170,15 @@ class ActionBlock extends \Cascade\Core\Block
 				$this->out('done', $result instanceOf \Smalldb\StateMachine\Reference ? !$result->isNullRef() : (bool) $result);
 			}
 		}
-		catch (\PDOException $ex) {
+		catch (\Exception $ex) {
 			error_msg('Action %s on machine %s failed: %s', $this->action, $this->machine->getMachineType(), $ex);
+			$exception_class = get_class($ex);
+			if (empty($this->accepted_exceptions[$exception_class])) {
+				throw $ex;
+			} else {
+				$this->out('error_msg', $ex->getMessage());
+				$this->out('exception', $ex->getMessage());
+			}
 		}
 	}
 
